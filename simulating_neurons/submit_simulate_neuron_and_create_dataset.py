@@ -30,9 +30,9 @@ def get_generate_dataset_args():
     saver.add_argument('--valid_input_folder', default=None)
     saver.add_argument('--test_input_folder', default=None)
 
-    saver.add_argument('--count_simulations_for_train', default=20, type=int, action=AddDefaultInformationAction)
+    saver.add_argument('--count_simulations_for_train', default=10000, type=int, action=AddDefaultInformationAction) # defaults for fci
     saver.add_argument('--count_simulations_for_valid', default=10, type=int, action=AddDefaultInformationAction)
-    saver.add_argument('--count_simulations_for_test', default=10, type=int, action=AddDefaultInformationAction)
+    saver.add_argument('--count_simulations_for_test', default=2500, type=int, action=AddDefaultInformationAction) # default for fci
 
     saver.add_argument('--percent_simulations_for_normalized_valid', default=0.4, type=float)
     saver.add_argument('--normalized_valid_average_firing_rate', default=1.0, type=float)

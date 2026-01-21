@@ -1219,23 +1219,23 @@ def get_tcn_training_args():
     saver.add_argument('--count_train_workers', default=2, type=int)
     saver.add_argument('--count_test_workers', default=1, type=int)
     saver.add_argument('--count_normalized_test_workers', default=1, type=int)
-    saver.add_argument('--use_valid_as_test', type=str2bool, nargs='?', const=True, default=True)
+    saver.add_argument('--use_valid_as_test', type=str2bool, nargs='?', const=True, default=False) # default for fci
     saver.add_argument('--best_by_normalized', type=str2bool, nargs='?', const=True, default=True)
 
     # architecture parameters
-    saver.add_argument('--depth', default=7, type=int)
-    saver.add_argument('--width', default=128, type=int)     
-    saver.add_argument('--first_kernel_size', type=int, default=54)
-    saver.add_argument('--later_kernels_size', type=int, default=12)
+    saver.add_argument('--depth', default=3, type=int) # default for fci
+    saver.add_argument('--width', default=128, type=int)  # default for fci     
+    saver.add_argument('--first_kernel_size', type=int, default=54) # default for fci
+    saver.add_argument('--later_kernels_size', type=int, default=12) # default for fci
     saver.add_argument('--dropout', type=float, default=0)
     saver.add_argument('--refractory_period_threshold', type=float, default=None)
     saver.add_argument('--count_connections_to_skip', type=int, default=None)
-    saver.add_argument('--skip_data_prob', type=float, default=0.0)
+    saver.add_argument('--skip_data_prob', type=float, default=0.5) # default for fci
     saver.add_argument('--do_not_skip_data_with_higher_than_average_firing_rate', type=str2bool, nargs='?', const=True, default=True)
-    saver.add_argument('--batch_size', type=int, default=128)
-    saver.add_argument('--lr', type=float, default=0.007)
+    saver.add_argument('--batch_size', type=int, default=180) # default for fci
+    saver.add_argument('--lr', type=float, default=0.01) # default for fci
     saver.add_argument('--lr_change_threshold', type=float, default=1e-10)
-    saver.add_argument('--weight_decay', type=float, default=1e-8)
+    saver.add_argument('--weight_decay', type=float, default=1e-8)  # default for fci
     saver.add_argument('--leaky_relu_alpha', type=float, default=0.3)
     saver.add_argument('--fl_alpha', type=float, default=0.25)
     saver.add_argument('--fl_gamma', type=float, default=1.0)
@@ -1246,7 +1246,7 @@ def get_tcn_training_args():
     saver.add_argument('--use_focal_loss',  type=str2bool, nargs='?', const=True, default=True)
     saver.add_argument('--use_nadam',  type=str2bool, nargs='?', const=True, default=True)
     saver.add_argument('--reset_lr',  type=str2bool, nargs='?', const=True, default=False)
-    saver.add_argument('--v_loss_weight', default=0.02, type=float)
+    saver.add_argument('--v_loss_weight', default=0.02, type=float) # default for fci
 
     # train parameters
     saver.add_argument('--count_epochs', type=int, default=int(1e20), action=AddDefaultInformationAction) # default infinity
@@ -1255,7 +1255,7 @@ def get_tcn_training_args():
     saver.add_argument('--test_every_in_steps', default=50000, type=int, action=AddDefaultInformationAction) # default 50k
     saver.add_argument('--test_every_in_fraction', default=float(1e20), type=float)  # default infinity
     saver.add_argument('--maximum_train_time_in_hours', default=int(1e20), type=float, action=AddDefaultInformationAction) # default infinity 
-    saver.add_argument('--maximum_train_steps', default=10000000, type=int, action=AddDefaultInformationAction) # default 10m
+    saver.add_argument('--maximum_train_steps', default=500000, type=int, action=AddDefaultInformationAction) # default 500k for fci
     saver.add_argument('--maximum_lr_changes', default=int(1e20), type=int, action=AddDefaultInformationAction) # default infinity
     saver.add_argument('--maximum_test_time_in_hours_per_test', default=float(1e20), type=float) # default infinity
     saver.add_argument('--test_normalized_every_in_count_tests', default=3, type=int) # default 3
