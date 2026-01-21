@@ -31,7 +31,7 @@ import wandb
 
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute()))
 
-from utils import setup_logger, str2bool, ArgumentSaver, AddDefaultInformationAction, AddOutFileAction, TeeAll
+from utils.utils import setup_logger, str2bool, ArgumentSaver, AddDefaultInformationAction, AddOutFileAction, TeeAll
 
 logger = logging.getLogger(__name__)
 
@@ -854,7 +854,7 @@ def train_neuron_tcn_on_data(args):
     kwargs["architecture"] = "FCN" if args.later_kernels_size == 1 else "TCN"
 
     try:
-        wandb.init(project="neuron_as_deep_net_2", config=kwargs, dir=args.neuron_tcn_folder, id=wandb_id, name=neuron_tcn_name, resume="allow")
+        wandb.init(project="fci", config=kwargs, dir=args.neuron_tcn_folder, id=wandb_id, name=neuron_tcn_name, resume="allow")
         wandb_init = True
     except Exception as e:
         logger.info(f"wandb init failed with [{e}], not using wandb.")

@@ -18,7 +18,8 @@ from scipy import sparse
 
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute()))
 
-from utils import setup_logger, str2bool, ArgumentSaver, AddOutFileAction, TeeAll, AddDefaultInformationAction
+from utils.utils import setup_logger, str2bool, ArgumentSaver, AddOutFileAction, TeeAll, AddDefaultInformationAction
+from utils.slurm_job import get_job_args
 
 import logging
 logger = logging.getLogger(__name__)
@@ -1098,6 +1099,9 @@ def get_args():
     parser.add_argument('--neuron_model_folder')
     parser.add_argument('--simulation_folder', action=AddOutFileAction)
     parser.add_argument('--input_file', default=None)
+
+    saver = get_job_args()
+    saver.add_to_parser(parser)
     
     saver = get_simulation_args()
     saver.add_to_parser(parser)

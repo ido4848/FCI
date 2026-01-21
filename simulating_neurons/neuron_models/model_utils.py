@@ -8,7 +8,7 @@ import pathlib
 
 sys.path.append(str(pathlib.Path(__file__).parent.parent.parent.parent.parent.parent.absolute()))
 
-from . import NeuronPlotter, MAX_CM, MIN_CM
+from simulating_neurons.neuron_plotter import NeuronPlotter, MAX_CM, MIN_CM
 
 logger = logging.getLogger(__name__)
 

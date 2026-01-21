@@ -1,3 +1,6 @@
+# compiled mod files
+**/x86_64/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
