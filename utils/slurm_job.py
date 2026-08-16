@@ -400,7 +400,9 @@ class SlurmJobFactory:
         job_log_filenames_str = " ".join(job_log_filenames)
         job_runlines = [job.run_line.replace(" ", "*") for (job, _) in self.jobs_to_batch]
         job_runlines_str = " ".join(job_runlines)
-        batch_job_run_line = f"python3 -u {BATCH_JOB_FILE} --job_names {job_names_str} --job_log_filenames {job_log_filenames_str} --job_runlines {job_runlines_str}"
+        # sys.executable and not "python3", so that batched jobs run in the same environment as
+        # the submitting process (conda env, venv, ...)
+        batch_job_run_line = f"{sys.executable} -u {BATCH_JOB_FILE} --job_names {job_names_str} --job_log_filenames {job_log_filenames_str} --job_runlines {job_runlines_str}"
         batch_job = SlurmJob(batch_job_name, self.job_folder, batch_job_run_line, run_on_GPU,
             timelimit, mem, False, False)
         batch_job.send()

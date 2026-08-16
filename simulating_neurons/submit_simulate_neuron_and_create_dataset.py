@@ -486,8 +486,10 @@ def generate_dataset(args, file_to_run=NEURON_FILE_TO_RUN, extra_arg_string_func
 
                     extra_arg_string = extra_arg_string_func(args)
                     
+                    # sys.executable and not "python3", so that the simulations run in the same
+                    # environment as the submitting process (conda env, venv, ...)
                     job_factory.send_job(job_name,\
-                        f"python3 -u {file_to_run} {simulation_arg_string} {input_file_arg_string} {extra_arg_string} --simulation_folder {simulation_folder} --save_plots {simulation_save_plots}",
+                        f"{sys.executable} -u {file_to_run} {simulation_arg_string} {input_file_arg_string} {extra_arg_string} --simulation_folder {simulation_folder} --save_plots {simulation_save_plots}",
                          extra=(state, i),
                           mem=args.cpu_job_memory*1000, use_scontrol=args.use_scontrol,
                            use_finishfile=args.use_finishfile, timelimit=args.simulation_job_timelimit)
