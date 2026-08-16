@@ -32,6 +32,7 @@ import wandb
 sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute()))
 
 from utils.utils import setup_logger, str2bool, ArgumentSaver, AddDefaultInformationAction, AddOutFileAction, TeeAll
+from utils.slurm_job import get_job_args
 
 logger = logging.getLogger(__name__)
 
@@ -660,9 +661,10 @@ def train_neuron_tcn_on_data(args):
 
     def compute_losses_and_collect_results(out_v, out_sp, data, y_preds, y_trues, v_preds, v_trues, loss_lists):
         # computing loss only when meaningfull, i.e. after network_temporal_extent ms
-        sp_pred = out_sp[:,network_temporal_extent:,:].squeeze()
+        # squeeze(-1) and not squeeze(), which would drop the batch dimension of a batch of one
+        sp_pred = out_sp[:,network_temporal_extent:,:].squeeze(-1)
         sp_gt = data['sps_out'][:,network_temporal_extent:]
-        v_pred = out_v[:,network_temporal_extent:,:].squeeze()
+        v_pred = out_v[:,network_temporal_extent:,:].squeeze(-1)
         v_gt = data['somatic_voltage_out'][:,network_temporal_extent:]
 
         y_preds.extend(list(torch.sigmoid(sp_pred).flatten().detach().cpu().numpy()))
@@ -1287,7 +1289,11 @@ def get_args():
 
     saver = get_tcn_training_args()
     saver.add_to_parser(parser)
-    
+
+    # --finish_file, which is used at the end of training and is passed by the job submitter
+    job_saver = get_job_args()
+    job_saver.add_to_parser(parser)
+
     parser.add_argument('--save_plots', type=str2bool, nargs='?', const=True, default=True)
     return parser.parse_args()
 
