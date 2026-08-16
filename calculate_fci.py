@@ -47,44 +47,61 @@ def auc_to_fci(auc, minimal_auc=0.9, maximal_auc=0.999, mult=1000):
     return fci
 
 
+def load_checkpoint(checkpoint_path):
+    """
+    Load a checkpoint written by train_neuron_tcn.py.
+
+    The light checkpoints (`model_<epoch>_<step>_light.pkl`) are plain pickles, while the full
+    ones (`model_<epoch>_<step>`) are written with torch.save.
+    """
+    try:
+        return pickle.load(open(checkpoint_path, 'rb'))
+    except pickle.UnpicklingError:
+        import torch
+        return torch.load(checkpoint_path, map_location='cpu')
+
+
 def load_best_auc_from_tcn_folder(neuron_tcn_folder):
     """
     Load the best AUC from a trained TCN folder.
-    
+
     Parameters
     ----------
     neuron_tcn_folder : str
         Path to the trained TCN folder
-    
+
     Returns
     -------
     dict
         Dictionary containing AUC values and other metrics
     """
     models_folder = os.path.join(neuron_tcn_folder, 'models')
-    
-    # Try to load the latest model checkpoint to get best_save
-    model_files = glob.glob(os.path.join(models_folder, 'model_*_*'))
-    model_files = [f for f in model_files if not f.endswith('.pkl')]
-    
+
+    # the light checkpoints hold the same best_save as the full ones, at a fraction of the size
+    # and without needing torch, so prefer them
+    model_files = glob.glob(os.path.join(models_folder, 'model_*_light.pkl'))
+    if not model_files:
+        model_files = [f for f in glob.glob(os.path.join(models_folder, 'model_*_*'))
+                       if not f.endswith('.pkl')]
+
     if not model_files:
         raise FileNotFoundError(f"No model checkpoints found in {models_folder}")
-    
+
     # Sort by step number (second number in filename)
     def get_step(f):
         try:
             return int(os.path.basename(f).split('_')[2])
         except:
             return 0
-    
+
     model_files.sort(key=get_step)
     latest_model = model_files[-1]
-    
+
     print(f"Loading checkpoint from: {latest_model}")
-    checkpoint = pickle.load(open(latest_model, 'rb'))
-    
+    checkpoint = load_checkpoint(latest_model)
+
     best_save = checkpoint.get('best_save', {})
-    
+
     return best_save
 
 
