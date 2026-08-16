@@ -1,6 +1,7 @@
 from __future__ import print_function
 import pathlib
 import importlib
+import importlib.util
 import copy
 import os
 import peakutils
@@ -421,9 +422,27 @@ def generate_spike_times_and_weights(args, syns):
 
     return generate_spike_times_and_weights_for_kernel_based_weights(args, syns, simulation_duration_in_ms)
 
+def import_get_standard_model(neuron_model_folder):
+    """Import the get_standard_model module of a neuron model, given its folder."""
+    get_standard_model_path = os.path.join(neuron_model_folder, "get_standard_model.py")
+    if not os.path.exists(get_standard_model_path):
+        raise FileNotFoundError(f"{neuron_model_folder} is not a neuron model folder, "
+                                f"it has no get_standard_model.py")
+
+    # by path and not by module name, so that --neuron_model_folder can be given as an absolute
+    # path, as a relative one, and from any working directory
+    module_name = os.path.normpath(neuron_model_folder).replace(os.sep, ".").strip(".")
+    spec = importlib.util.spec_from_file_location(f"{module_name}.get_standard_model",
+                                                  get_standard_model_path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+
+    return module
+
 def create_neuron_model(args):
     logger.info("About to import neuron module...")
-    tm = importlib.import_module(f'{args.neuron_model_folder.replace("/",".")}.get_standard_model')
+    tm = import_get_standard_model(args.neuron_model_folder)
     logger.info("neuron module imported fine.")
 
     logger.info("About to create cell...")
