@@ -1,0 +1,343 @@
+{
+    "units": "spikes per synapse per second (Hz)",
+    "count_options": 20,
+    "calibration": {
+        "legitimate_output_fr_range": [
+            0.9,
+            1.1
+        ],
+        "count_simulations_for_option": 20,
+        "simulation_duration_in_seconds": 10,
+        "exc_fr_per_synapse_bin_size": 0.05,
+        "inh_fr_per_synapse_bin_size": 0.05,
+        "dynamic_search": true,
+        "neuron_model_folder": "simulating_neurons/neuron_models/rat/hay/Rat_L5b_PC_2_Hay_passive_dends_simple_soma",
+        "note": "calibrated for Aizenbud et al., these are the options the paper's dataset for this model was generated with"
+    },
+    "options": [
+        {
+            "exc_fr_per_synapse_range": [
+                1.05,
+                1.1
+            ],
+            "inh_fr_per_synapse_range": [
+                0.7,
+                0.75
+            ],
+            "average_output_fr": 0.97,
+            "std_output_fr": 0.40632499307820086
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                1.1,
+                1.15
+            ],
+            "inh_fr_per_synapse_range": [
+                0.75,
+                0.8
+            ],
+            "average_output_fr": 0.96,
+            "std_output_fr": 0.3168595903550972
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                1.75,
+                1.8
+            ],
+            "inh_fr_per_synapse_range": [
+                1.35,
+                1.4
+            ],
+            "average_output_fr": 0.9350000000000002,
+            "std_output_fr": 0.3070423423568808
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                2.2,
+                2.25
+            ],
+            "inh_fr_per_synapse_range": [
+                1.75,
+                1.8
+            ],
+            "average_output_fr": 1.0799999999999998,
+            "std_output_fr": 0.3414674215792774
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                2.25,
+                2.3
+            ],
+            "inh_fr_per_synapse_range": [
+                1.8,
+                1.85
+            ],
+            "average_output_fr": 1.0750000000000002,
+            "std_output_fr": 0.26433879775772606
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                2.3,
+                2.35
+            ],
+            "inh_fr_per_synapse_range": [
+                1.85,
+                1.9
+            ],
+            "average_output_fr": 1.015,
+            "std_output_fr": 0.2632014437650371
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                2.75,
+                2.8
+            ],
+            "inh_fr_per_synapse_range": [
+                2.25,
+                2.3
+            ],
+            "average_output_fr": 1.0050000000000001,
+            "std_output_fr": 0.21089096708963143
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                2.8,
+                2.85
+            ],
+            "inh_fr_per_synapse_range": [
+                2.3,
+                2.35
+            ],
+            "average_output_fr": 1.0299999999999998,
+            "std_output_fr": 0.33926390907374754
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                3.2,
+                3.25
+            ],
+            "inh_fr_per_synapse_range": [
+                2.65,
+                2.7
+            ],
+            "average_output_fr": 0.925,
+            "std_output_fr": 0.32538438807047887
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                3.25,
+                3.3
+            ],
+            "inh_fr_per_synapse_range": [
+                2.7,
+                2.75
+            ],
+            "average_output_fr": 0.9549999999999998,
+            "std_output_fr": 0.1961504524593303
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                3.3,
+                3.35
+            ],
+            "inh_fr_per_synapse_range": [
+                2.75,
+                2.8
+            ],
+            "average_output_fr": 0.9,
+            "std_output_fr": 0.3316624790355399
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                3.6,
+                3.65
+            ],
+            "inh_fr_per_synapse_range": [
+                3.0,
+                3.05
+            ],
+            "average_output_fr": 1.02,
+            "std_output_fr": 0.44676615807377357
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                3.65,
+                3.7
+            ],
+            "inh_fr_per_synapse_range": [
+                3.05,
+                3.1
+            ],
+            "average_output_fr": 1.0550000000000002,
+            "std_output_fr": 0.30573681492420896
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                4.05,
+                4.1
+            ],
+            "inh_fr_per_synapse_range": [
+                3.4,
+                3.45
+            ],
+            "average_output_fr": 1.0099999999999998,
+            "std_output_fr": 0.4825971404805462
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                4.45,
+                4.5
+            ],
+            "inh_fr_per_synapse_range": [
+                3.75,
+                3.8
+            ],
+            "average_output_fr": 0.9500000000000002,
+            "std_output_fr": 0.3471310991541956
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                4.5,
+                4.55
+            ],
+            "inh_fr_per_synapse_range": [
+                3.8,
+                3.85
+            ],
+            "average_output_fr": 0.915,
+            "std_output_fr": 0.2761792895928295
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                4.55,
+                4.6
+            ],
+            "inh_fr_per_synapse_range": [
+                3.85,
+                3.9
+            ],
+            "average_output_fr": 0.905,
+            "std_output_fr": 0.29576172842340503
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                4.75,
+                4.8
+            ],
+            "inh_fr_per_synapse_range": [
+                4.0,
+                4.05
+            ],
+            "average_output_fr": 1.085,
+            "std_output_fr": 0.30376800358168077
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                4.8,
+                4.85
+            ],
+            "inh_fr_per_synapse_range": [
+                4.05,
+                4.1
+            ],
+            "average_output_fr": 1.0399999999999998,
+            "std_output_fr": 0.25179356624028343
+        },
+        {
+            "exc_fr_per_synapse_range": [
+                4.9,
+                4.95
+            ],
+            "inh_fr_per_synapse_range": [
+                4.15,
+                4.2
+            ],
+            "average_output_fr": 0.9400000000000001,
+            "std_output_fr": 0.2596150997149434
+        }
+    ],
+    "exc_fr_per_synapse_options": [
+        1.05,
+        1.1,
+        1.1,
+        1.15,
+        1.75,
+        1.8,
+        2.2,
+        2.25,
+        2.25,
+        2.3,
+        2.3,
+        2.35,
+        2.75,
+        2.8,
+        2.8,
+        2.85,
+        3.2,
+        3.25,
+        3.25,
+        3.3,
+        3.3,
+        3.35,
+        3.6,
+        3.65,
+        3.65,
+        3.7,
+        4.05,
+        4.1,
+        4.45,
+        4.5,
+        4.5,
+        4.55,
+        4.55,
+        4.6,
+        4.75,
+        4.8,
+        4.8,
+        4.85,
+        4.9,
+        4.95
+    ],
+    "inh_fr_per_synapse_options": [
+        0.7,
+        0.75,
+        0.75,
+        0.8,
+        1.35,
+        1.4,
+        1.75,
+        1.8,
+        1.8,
+        1.85,
+        1.85,
+        1.9,
+        2.25,
+        2.3,
+        2.3,
+        2.35,
+        2.65,
+        2.7,
+        2.7,
+        2.75,
+        2.75,
+        2.8,
+        3.0,
+        3.05,
+        3.05,
+        3.1,
+        3.4,
+        3.45,
+        3.75,
+        3.8,
+        3.8,
+        3.85,
+        3.85,
+        3.9,
+        4.0,
+        4.05,
+        4.05,
+        4.1,
+        4.15,
+        4.2
+    ]
+}

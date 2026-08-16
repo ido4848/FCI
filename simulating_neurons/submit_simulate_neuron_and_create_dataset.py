@@ -17,6 +17,7 @@ from utils.status import Status
 from utils.slurm_job import SlurmJobFactory, get_job_submitter_args, get_job_args
 from utils.utils import setup_logger, str2bool, args_to_arg_string, MAXIMAL_RANDOM_SEED, ArgumentSaver, AddDefaultInformationAction, AddOutFileAction, TeeAll
 from simulating_neurons.simulate_neuron import get_simulation_args
+from simulating_neurons.io_matrix_utils import load_legitimate_options
 
 import logging
 logger = logging.getLogger(__name__)
@@ -54,9 +55,12 @@ def get_generate_dataset_args():
     saver.add_argument('--normalized_test_choosing_change_per_iteration_isi', default=1, type=int)
     saver.add_argument('--normalized_test_choosing_maximum_strikes', default=500, type=int)
 
-    # number of spikes generation parameters
-    saver.add_argument('--exc_fr_per_synapse_options', nargs='+', type=float, default=[0.0, 1.0, 1.0, 2.0])
-    saver.add_argument('--inh_fr_per_synapse_options', nargs='+', type=float, default=[0.0, 1.0, 1.0, 2.0])
+    # number of spikes generation parameters.
+    # these are model specific and are normally not given by hand: when they are left out, the io
+    # matrix shipped with --neuron_model_folder supplies them (see io_matrix_utils.py). the
+    # defaults below are a placeholder, only used for a model that ships no io matrix.
+    saver.add_argument('--exc_fr_per_synapse_options', nargs='+', type=float, default=[0.0, 1.0, 1.0, 2.0], action=AddDefaultInformationAction)
+    saver.add_argument('--inh_fr_per_synapse_options', nargs='+', type=float, default=[0.0, 1.0, 1.0, 2.0], action=AddDefaultInformationAction)
     saver.add_argument('--fr_option_choice_by_modulo', type=str2bool, nargs='?', const=True, default=False)
     saver.add_argument('--same_exc_inh_count_spikes_per_synapse_per_100ms_range_prob', type=float, default=0.1)
 
@@ -303,10 +307,46 @@ def choose_normalized_fr_isi_set(set_by_index, kwargs, name, log_iter=True):
 def neuron_extra_arg_string_func(args):
     return f'--neuron_model_folder {args.neuron_model_folder}'
 
+def take_fr_per_synapse_options_from_neuron_model(args):
+    """
+    Use the io matrix shipped with the neuron model as the input firing rate options.
+
+    Which input firing rates make a neuron fire at ~1 Hz is a property of that specific model, so
+    unless the rates were given explicitly they are taken from the model's own io matrix. Without
+    them the neuron would be driven at an arbitrary output firing rate and its FCI would not be
+    comparable to any other model's (see create_io_matrix.py).
+    """
+    if getattr(args, 'exc_fr_per_synapse_options_nondefault', False) or \
+            getattr(args, 'inh_fr_per_synapse_options_nondefault', False):
+        logger.info("using the fr per synapse options given explicitly")
+        return
+
+    if not args.neuron_model_folder:
+        return
+
+    io_matrix = load_legitimate_options(args.neuron_model_folder)
+    if io_matrix is None:
+        logger.warning(f"{args.neuron_model_folder} ships no io matrix, falling back on the default "
+                       f"fr per synapse options. these are a placeholder and are very unlikely to "
+                       f"drive this model at the intended output firing rate - run "
+                       f"create_io_matrix.py for it, or pass --exc_fr_per_synapse_options / "
+                       f"--inh_fr_per_synapse_options explicitly.")
+        return
+
+    args.exc_fr_per_synapse_options = io_matrix['exc_fr_per_synapse_options']
+    args.inh_fr_per_synapse_options = io_matrix['inh_fr_per_synapse_options']
+
+    calibration = io_matrix.get('calibration', {})
+    logger.info(f"took {io_matrix['count_options']} fr per synapse options from the io matrix of "
+                f"{args.neuron_model_folder} (calibrated for an output firing rate of "
+                f"{calibration.get('legitimate_output_fr_range')} Hz)")
+
 def generate_dataset(args, file_to_run=NEURON_FILE_TO_RUN, extra_arg_string_func=neuron_extra_arg_string_func):
     logger.info("Going to generate dataset with args:")
     logger.info("{}".format(args))
     logger.info("...")
+
+    take_fr_per_synapse_options_from_neuron_model(args)
 
     # TODO: is this assert needed?
     # assert args.count_simulations_for_test >= 10, "must have at least 10 test simulations"
