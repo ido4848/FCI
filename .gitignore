@@ -1,6 +1,9 @@
 # compiled mod files
 **/x86_64/
 
+# output of quick_test.py
+quick_test_output/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
