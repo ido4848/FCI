@@ -1,13 +1,18 @@
 # FCI: Functional Complexity Index
 
-This repository contains the code accompanying the preprint:
+This repository contains the code accompanying:
 
-**["What makes human cortical pyramidal neurons functionally complex"](https://www.biorxiv.org/content/10.1101/2024.12.17.628883v1)**
+**["Dendritic morphology and synaptic nonlinearities enhance functional complexity in human cortical neurons"](https://www.pnas.org/doi/10.1073/pnas.2533168123)**
 
-Ido Aizenbud, Daniela Yoeli, David Beniaguev, Christiaan PJ de Kock, Michael London, Idan Segev
+Ido Aizenbud, Daniela Yoeli, David Beniaguev, Christiaan P. J. de Kock, Michael London, Idan Segev
+
+*Proceedings of the National Academy of Sciences* 123(28), e2533168123 (2026).
+
+An earlier version appeared as the preprint
+["What makes human cortical pyramidal neurons functionally complex"](https://www.biorxiv.org/content/10.1101/2024.12.17.628883v1).
 
 ## Abstract
-Humans exhibit unique cognitive abilities within the animal kingdom, but the neural mechanisms driving these advanced capabilities remain poorly understood. Human cortical neurons differ from those of other species, such as rodents, in both their morphological and physiological characteristics. Could the distinct properties of human cortical neurons help explain the superior cognitive capabilities of humans? Understanding this relationship requires a metric to quantify how neuronal properties contribute to the functional complexity of single neurons, yet no such standardized measure currently exists. Here, we propose the Functional Complexity Index (FCI), a generalized, deep learning-based framework to assess the input-output complexity of neurons. By comparing the FCI of cortical pyramidal neurons from different layers in rats and humans, we identified key morpho-electrical factors that underlie functional complexity. Human cortical pyramidal neurons were found to be significantly more functionally complex than their rat counterparts, primarily due to differences in dendritic membrane area and branching pattern, as well as density and nonlinearity of NMDA-mediated synaptic receptors. These findings reveal the structural-biophysical basis for the enhanced functional properties of human neurons.
+Humans exhibit unique cognitive abilities within the animal kingdom, but the neural mechanisms driving these advanced capabilities remain poorly understood. Human cortical neurons differ from those of other species, such as rodents, in both their morphological and physiological characteristics. Could the distinct properties of human cortical neurons help explain the superior cognitive capabilities of humans? Understanding this relationship requires a measure to quantify how neuronal properties contribute to the functional complexity of single neurons; yet, such a standardized measure is currently missing. Here, we propose the Functional Complexity Index (FCI), a general, deep-learning-based framework for assessing the input–output complexity of neurons. By comparing the FCI of cortical pyramidal neurons across layers in rats and humans, we identified key morpho-electrical factors that underlie neuronal functional complexity. Human cortical pyramidal neurons are significantly more functionally complex than their rat counterparts, primarily due to differences in dendritic membrane area and branching patterns, as well as in the density and nonlinearity of NMDA-mediated synaptic receptors. These findings reveal the structural and biophysical basis for the enhanced functional properties of human cortical neurons, providing a key step toward understanding the underpinnings of our enhanced cognitive capabilities.
 
 ![](fig1.png)
 
@@ -290,4 +295,21 @@ $$\text{FCI} = \frac{\log_{10}(1000 \times (1 - \text{AUC}))}{\log_{10}(1000 \ti
 Where:
 - AUC = 0.9 → FCI = 1.0 (maximum complexity)
 - AUC = 0.999 → FCI ≈ 0.0 (near-perfect prediction, low complexity)
+
+---
+
+## Citation
+
+```bibtex
+@article{aizenbud2026fci,
+    title   = {Dendritic morphology and synaptic nonlinearities enhance functional complexity in human cortical neurons},
+    author  = {Aizenbud, Ido and Yoeli, Daniela and Beniaguev, David and de Kock, Christiaan P. J. and London, Michael and Segev, Idan},
+    journal = {Proceedings of the National Academy of Sciences},
+    volume  = {123},
+    number  = {28},
+    pages   = {e2533168123},
+    year    = {2026},
+    doi     = {10.1073/pnas.2533168123},
+}
+```
 
