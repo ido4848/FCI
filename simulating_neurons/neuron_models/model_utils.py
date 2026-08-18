@@ -12,7 +12,11 @@ from simulating_neurons.neuron_plotter import NeuronPlotter, MAX_CM, MIN_CM
 
 logger = logging.getLogger(__name__)
 
+# The four synapse types of the paper (SI Appendix, Table S2). Two encodings differ from the
+# table: conductances are in uS rather than nS, and the NMDA conductance is stored as NMDA_ratio,
+# its ratio to the AMPA one - the 1.31 nS of human NMDA is NMDA_ratio * AMPA_default_conductance.
 PARAMETER_SETS = {
+    # "human" in the paper
     'human':{
         'AMPANMDA_e': 0,
         'tau_r_AMPA':0.3,
@@ -32,6 +36,7 @@ PARAMETER_SETS = {
         'celsius':34.0,
     },
 
+    # "hybrid B" in the paper: human synapses with the smaller rat NMDA gamma
     'human_rat_gamma':{
         'AMPANMDA_e': 0,
         'tau_r_AMPA':0.3,
@@ -51,6 +56,7 @@ PARAMETER_SETS = {
         'celsius':34.0,
     },
 
+    # "rat" in the paper
     'rat':{
         'AMPANMDA_e': 0,
         'tau_r_AMPA':0.2,
@@ -70,6 +76,7 @@ PARAMETER_SETS = {
         'celsius':34.0,
     },
 
+    # "hybrid A" in the paper: rat synapses with the larger human NMDA gamma
     'rat_human_gamma':{
         'AMPANMDA_e': 0,
         'tau_r_AMPA':0.2,

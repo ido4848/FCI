@@ -64,6 +64,12 @@ the paper (12 human, 12 rat). Each model folder holds:
 | `rat/bbp/Rat_L6_TPC_BBP_Mandge_passive_dends_simple_soma` | L6 | `Fluo41_left.asc` |
 | `rat/bbp/Rat_L6_UPC_BBP_Mandge_passive_dends_simple_soma` | L6 | `Fluo12_right.asc` |
 
+The sub-folder names give the origin of the morphology and biophysics: `eyal` (Eyal et al.),
+`allen` (Allen Cell Types Database), `hay` (Hay et al.) and `bbp` (Blue Brain Project human and
+rat models). `diams_fixed` marks a morphology whose reconstructed dendritic diameters were
+corrected, and `passive_dends_simple_soma` marks the standard configuration used throughout the
+paper: passive dendrites with a spiking (Na/Kv) soma and axon.
+
 ### Which model is which neuron in the paper
 
 The paper identifies these neurons by a morphology identifier (`2057`, `L2 TPC`, `548494556`)
@@ -87,11 +93,28 @@ Note which FCI those correlations use: Fig. 3 regresses the features on **`fci_r
 where every morphology carries the same rat-type synapses, so that morphology is the only thing
 varying. Using the `fci` column instead gives 0.35 for total dendritic area rather than 0.74.
 
-The sub-folder names give the origin of the morphology and biophysics: `eyal` (Eyal et al.),
-`allen` (Allen Cell Types Database), `hay` (Hay et al.) and `bbp` (Blue Brain Project human and
-rat models). `diams_fixed` marks a morphology whose reconstructed dendritic diameters were
-corrected, and `passive_dends_simple_soma` marks the standard configuration used throughout the
-paper: passive dendrites with a spiking (Na/Kv) soma and axon.
+### Synapse types
+
+Every model places one excitatory AMPA+NMDA synapse and one inhibitory GABA-A synapse per µm of
+dendrite, with parameters taken from one of the four synapse types of the paper. All four are in
+`PARAMETER_SETS` in [`model_utils.py`](simulating_neurons/neuron_models/model_utils.py), under
+names the paper does not use:
+
+| SI Appendix, Table S2 | `PARAMETER_SETS` | |
+| --- | --- | --- |
+| rat | `rat` | |
+| human | `human` | |
+| hybrid A | `rat_human_gamma` | rat conductances, human NMDA γ (0.078) |
+| hybrid B | `human_rat_gamma` | human conductances, rat NMDA γ (0.062) |
+
+Each model uses the type of its own species, which is the comparison of Fig. 2; the `synapse_type`
+column of `models.csv` records it. Fig. 4 and Fig. S5 give every morphology the same type, which
+you can reproduce by changing that one name in a model's `get_standard_model.py` - nothing else
+about the model changes.
+
+The stored values are exactly Table S2 in a different encoding: conductances are in µS rather
+than nS, and the NMDA conductance is `NMDA_ratio`, its ratio to the AMPA conductance, so human
+NMDA is `0.00131/0.00088 × 0.00088 µS` = 1.31 nS.
 
 ---
 
