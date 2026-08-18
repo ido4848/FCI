@@ -1,0 +1,25 @@
+order_in_fig2,species,layer,morphology_identifier,citation,model_folder,morphology_file,synapse_type,fci,fci_rat_synapses
+1,rat,L2/3,L2 TPC,Reimann et al. 2024,simulating_neurons/neuron_models/rat/bbp/Rat_L2_TPC_BBP_Mandge_diams_fixed_passive_dends_simple_soma,mtC191200B_idA_diams_fixed.asc,rat,0.1877,0.1877
+2,rat,L6,L6 IPC,Reimann et al. 2024,simulating_neurons/neuron_models/rat/bbp/Rat_L6_IPC_BBP_Mandge_diams_fixed_passive_dends_simple_soma,mtC110301B_idB_diams_fixed.asc,rat,0.1972,0.1972
+3,rat,L4,L4 TPC,Reimann et al. 2024,simulating_neurons/neuron_models/rat/bbp/Rat_L4_TPC_BBP_Mandge_passive_dends_simple_soma,C310897A-P4.asc,rat,0.2032,0.2032
+4,rat,L6,L6 TPC,Reimann et al. 2024,simulating_neurons/neuron_models/rat/bbp/Rat_L6_TPC_BBP_Mandge_passive_dends_simple_soma,Fluo41_left.asc,rat,0.2052,0.2052
+5,rat,L2/3,229_5,Markram et al. 2015,simulating_neurons/neuron_models/rat/bbp/Rat_L23_PC_cADpyr229_5_BBP_passive_dends_simple_soma,dend-C260897C-P3_axon-C220797A-P3_-_Clone_0.asc,rat,0.2156,0.2156
+6,rat,L2/3,229_1,Markram et al. 2015,simulating_neurons/neuron_models/rat/bbp/Rat_L23_PC_cADpyr229_1_BBP_passive_dends_simple_soma,dend-C170897A-P3_axon-C260897C-P4_-_Clone_4.asc,rat,0.2260,0.2260
+7,rat,L5,cell1,Hay et al. 2011,simulating_neurons/neuron_models/rat/hay/Rat_L5b_PC_2_Hay_passive_dends_simple_soma,cell1.asc,rat,0.2342,0.2342
+8,rat,L4,230_1,Markram et al. 2015,simulating_neurons/neuron_models/rat/bbp/Rat_L4_PC_cADpyr230_1_BBP_passive_dends_simple_soma,dend-C300797C-P4_axon-C200897C-P4_-_Scale_x1.000_y1.025_z1.000_-_Clone_11.asc,rat,0.2362,0.2362
+9,rat,L6,L6 UPC,Reimann et al. 2024,simulating_neurons/neuron_models/rat/bbp/Rat_L6_UPC_BBP_Mandge_passive_dends_simple_soma,Fluo12_right.asc,rat,0.2399,0.2399
+10,rat,L4,230_2,Markram et al. 2015,simulating_neurons/neuron_models/rat/bbp/Rat_L4_PC_cADpyr230_2_BBP_passive_dends_simple_soma,dend-C310897B-P3_axon-C220498B-P3_cor_-_Clone_1.asc,rat,0.2452,0.2452
+11,rat,L5,TTPC_1 232_1,Markram et al. 2015,simulating_neurons/neuron_models/rat/bbp/Rat_L5_TTPC1_cADpyr232_1_BBP_diams_fixed_passive_dends_simple_soma,dend-C060114A2_axon-C060114A5_diams_fixed.asc,rat,0.2509,0.2509
+12,rat,L5,L5 TPC,Reimann et al. 2024,simulating_neurons/neuron_models/rat/bbp/Rat_L5_TPC_BBP_Mandge_passive_dends_simple_soma,C060114A5.asc,rat,0.2510,0.2510
+13,human,L6,548494556,Allen Institute for Brain Science 2015,simulating_neurons/neuron_models/human/allen/Human_L6_PC_548494556_Allen_passive_dends_simple_soma,H16.03.011.11.16.03_570679763_m.swc,human,0.3146,0.2076
+14,human,L6,528614014,Allen Institute for Brain Science 2015,simulating_neurons/neuron_models/human/allen/Human_L6_PC_528614014_Allen_passive_dends_simple_soma,H16.06.009.01.01.04.02_595952514_m.swc,human,0.3274,0.2024
+15,human,L5,1833,Mohan et al. 2015,simulating_neurons/neuron_models/human/bbp/Human_L5_PC_BBP_Mandge_passive_dends_simple_soma,1833_Thijs_human_13april_slice2_cell1.swc,human,0.3618,0.2476
+16,human,L4,539661667,Allen Institute for Brain Science 2015,simulating_neurons/neuron_models/human/allen/Human_L4_PC_539661667_Allen_passive_dends_simple_soma,H16.06.011.01.01.05.05_680109366_m.swc,human,0.3626,0.2389
+17,human,L5,2057,Mohan et al. 2015,simulating_neurons/neuron_models/human/bbp/Human_L5_PC_0_BBP_passive_dends_simple_soma,2057_H21_29_197_11_01_03_metcontour.asc,human,0.3672,0.3024
+18,human,L4,569818704,Allen Institute for Brain Science 2015,simulating_neurons/neuron_models/human/allen/Human_L4_PC_569818704_Allen_passive_dends_simple_soma,H17.03.002.11.04.01_599474706_m.swc,human,0.3757,0.2199
+19,human,L5,790872626,Allen Institute for Brain Science 2015,simulating_neurons/neuron_models/human/allen/Human_L5_PC_790872626_Allen_passive_dends_simple_soma,790872626_raw.swc,human,0.3934,0.2201
+20,human,L4,1496,Mohan et al. 2015,simulating_neurons/neuron_models/human/bbp/Human_L4_PC_BBP_Mandge_diams_fixed_passive_dends_simple_soma,1496_Thijs_22juni_slice1_cell3_diams_fixed.asc,human,0.3957,0.2728
+21,human,L6,558211203,Allen Institute for Brain Science 2015,simulating_neurons/neuron_models/human/allen/Human_L6_PC_558211203_Allen_passive_dends_simple_soma,H16.06.012.11.06.06_680112303_m.swc,human,0.4004,0.2502
+22,human,L2/3,1204,Mohan et al. 2015,simulating_neurons/neuron_models/human/eyal/Human_L23_PC_1303_03_448_Eyal_passive_dends_simple_soma,2013_03_13_cell03_1204_H42_02.asc,human,0.4165,0.3401
+23,human,L2/3,1148,Mohan et al. 2015,simulating_neurons/neuron_models/human/bbp/Human_L3_PC_0_BBP_passive_dends_simple_soma,1148_H42_01.asc,human,0.4190,0.3128
+24,human,L2/3,1125,Mohan et al. 2015,simulating_neurons/neuron_models/human/eyal/Human_L23_PC_0603_11_937_Eyal_passive_dends_simple_soma,2013_03_06_cell11_1125_H41_06.asc,human,0.4294,0.3223

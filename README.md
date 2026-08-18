@@ -36,7 +36,7 @@ the paper (12 human, 12 rat). Each model folder holds:
 | --- | --- | --- |
 | `human/eyal/Human_L23_PC_0603_11_937_Eyal_passive_dends_simple_soma` | L2/3 | `2013_03_06_cell11_1125_H41_06.asc` |
 | `human/eyal/Human_L23_PC_1303_03_448_Eyal_passive_dends_simple_soma` | L2/3 | `2013_03_13_cell03_1204_H42_02.asc` |
-| `human/bbp/Human_L3_PC_0_BBP_passive_dends_simple_soma` | L3 | `1148_H42_01.asc` |
+| `human/bbp/Human_L3_PC_0_BBP_passive_dends_simple_soma` | L2/3 | `1148_H42_01.asc` |
 | `human/allen/Human_L4_PC_539661667_Allen_passive_dends_simple_soma` | L4 | `H16.06.011.01.01.05.05_680109366_m.swc` |
 | `human/allen/Human_L4_PC_569818704_Allen_passive_dends_simple_soma` | L4 | `H17.03.002.11.04.01_599474706_m.swc` |
 | `human/bbp/Human_L4_PC_BBP_Mandge_diams_fixed_passive_dends_simple_soma` | L4 | `1496_Thijs_22juni_slice1_cell3_diams_fixed.asc` |
@@ -51,7 +51,7 @@ the paper (12 human, 12 rat). Each model folder holds:
 
 | Model folder (under `simulating_neurons/neuron_models/`) | Layer | Morphology |
 | --- | --- | --- |
-| `rat/bbp/Rat_L2_TPC_BBP_Mandge_diams_fixed_passive_dends_simple_soma` | L2 | `mtC191200B_idA_diams_fixed.asc` |
+| `rat/bbp/Rat_L2_TPC_BBP_Mandge_diams_fixed_passive_dends_simple_soma` | L2/3 | `mtC191200B_idA_diams_fixed.asc` |
 | `rat/bbp/Rat_L23_PC_cADpyr229_1_BBP_passive_dends_simple_soma` | L2/3 | `dend-C170897A-P3_axon-C260897C-P4_-_Clone_4.asc` |
 | `rat/bbp/Rat_L23_PC_cADpyr229_5_BBP_passive_dends_simple_soma` | L2/3 | `dend-C260897C-P3_axon-C220797A-P3_-_Clone_0.asc` |
 | `rat/bbp/Rat_L4_PC_cADpyr230_1_BBP_passive_dends_simple_soma` | L4 | `dend-C300797C-P4_axon-C200897C-P4_-_Scale_x1.000_y1.025_z1.000_-_Clone_11.asc` |
@@ -59,10 +59,33 @@ the paper (12 human, 12 rat). Each model folder holds:
 | `rat/bbp/Rat_L4_TPC_BBP_Mandge_passive_dends_simple_soma` | L4 | `C310897A-P4.asc` |
 | `rat/bbp/Rat_L5_TPC_BBP_Mandge_passive_dends_simple_soma` | L5 | `C060114A5.asc` |
 | `rat/bbp/Rat_L5_TTPC1_cADpyr232_1_BBP_diams_fixed_passive_dends_simple_soma` | L5 | `dend-C060114A2_axon-C060114A5_diams_fixed.asc` |
-| `rat/hay/Rat_L5b_PC_2_Hay_passive_dends_simple_soma` | L5b | `cell1.asc` |
+| `rat/hay/Rat_L5b_PC_2_Hay_passive_dends_simple_soma` | L5 | `cell1.asc` |
 | `rat/bbp/Rat_L6_IPC_BBP_Mandge_diams_fixed_passive_dends_simple_soma` | L6 | `mtC110301B_idB_diams_fixed.asc` |
 | `rat/bbp/Rat_L6_TPC_BBP_Mandge_passive_dends_simple_soma` | L6 | `Fluo41_left.asc` |
 | `rat/bbp/Rat_L6_UPC_BBP_Mandge_passive_dends_simple_soma` | L6 | `Fluo12_right.asc` |
+
+### Which model is which neuron in the paper
+
+The paper identifies these neurons by a morphology identifier (`2057`, `L2 TPC`, `548494556`)
+and by their order in Fig. 2, never by folder name, and for 7 of the 24 that identifier appears
+only inside the morphology filename - three folders even carry a different number (`937` for
+1125, `448` for 1204, `0` for 2057). [`models.csv`](models.csv) is the join:
+
+| column | |
+| --- | --- |
+| `order_in_fig2`, `species`, `layer`, `morphology_identifier`, `citation` | SI Appendix, Table S1 |
+| `model_folder`, `morphology_file`, `synapse_type` | this repository |
+| `fci` | the value printed above that neuron in Fig. 2A |
+| `fci_rat_synapses` | its FCI when given rat-type synapses, i.e. Fig. S5A |
+
+[`morphological_features.csv`](morphological_features.csv) holds the 65 morphological features
+of each morphology - the numbers behind Fig. 3, which are published only as correlations. They
+are computed with NeuroM and TMD exactly as the paper's analysis does it, and reproduce its
+reported R² values (total dendritic area 0.743 against the published 0.74).
+
+Note which FCI those correlations use: Fig. 3 regresses the features on **`fci_rat_synapses`**,
+where every morphology carries the same rat-type synapses, so that morphology is the only thing
+varying. Using the `fci` column instead gives 0.35 for total dendritic area rather than 0.74.
 
 The sub-folder names give the origin of the morphology and biophysics: `eyal` (Eyal et al.),
 `allen` (Allen Cell Types Database), `hay` (Hay et al.) and `bbp` (Blue Brain Project human and
