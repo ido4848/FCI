@@ -33,6 +33,7 @@ sys.path.append(str(pathlib.Path(__file__).parent.parent.absolute()))
 
 from utils.utils import setup_logger, str2bool, ArgumentSaver, AddDefaultInformationAction, AddOutFileAction, TeeAll
 from utils.slurm_job import get_job_args
+from utils.simulation_shards import is_sharded, ShardIndex
 
 logger = logging.getLogger(__name__)
 
@@ -273,10 +274,22 @@ class SimulationData(Dataset):
             else:
                 self.v_offset = self.v_offset[0]
 
+        # a dataset is either one simulation_<n> folder per simulation, or a few shard_*.h5 files
+        # holding all of them (see utils/simulation_shards.py); both hold the same information
+        self.shard_index = ShardIndex(self.base_directory) if is_sharded(self.base_directory) else None
+
         # test one file
-        example_simulation = f'{self.base_directory}/simulation_0'
-        voltage = h5py.File(f'{example_simulation}/voltage.h5', 'r')
-        summary = pickle.load(open(f'{example_simulation}/summary.pkl','rb'))
+        if self.shard_index is not None:
+            example_index = self.shard_index.simulation_indices[0]
+            example_simulation = f'{self.base_directory} (sharded) simulation_{example_index}'
+            summary = self.shard_index.read(example_index, what=('summary',))['summary']
+            missing = [i for i in self.simulation_indices if i not in self.shard_index.simulation_to_shard]
+            if missing:
+                raise FileNotFoundError(f"{len(missing)} simulations of {self.base_directory}/summary.pkl are not in its shards, e.g. {missing[:5]}")
+        else:
+            example_simulation = f'{self.base_directory}/simulation_0'
+            voltage = h5py.File(f'{example_simulation}/voltage.h5', 'r')
+            summary = pickle.load(open(f'{example_simulation}/summary.pkl','rb'))
         simulation_duration_in_ms = summary['simulation_duration_in_ms']
         example_simulation_spike_count = len(np.nonzero(summary['output_spike_times'])[0])
         logger.info(f'{example_simulation} has {example_simulation_spike_count} spikes')
@@ -305,6 +318,9 @@ class SimulationData(Dataset):
 
         st_pos = self.start_t + (self.window_size-self.overlap_size)*(idx%self.num_per_sim) 
         en_pos = st_pos + self.window_size
+
+        if self.shard_index is not None:
+            return self._getitem_from_shard(simulation_n, st_pos, en_pos)
 
         sim_folder = f"{self.base_directory}/simulation_{simulation_n}"
 
@@ -350,6 +366,25 @@ class SimulationData(Dataset):
                   'somatic_voltage_out':somatic_voltage_for_window,
                   'sps_out':output_spikes_for_window}
         return r_item
+
+    def _getitem_from_shard(self, simulation_n, st_pos, en_pos):
+        # the same item as __getitem__ builds from a simulation_<n> folder, read from the shards
+        sim = self.shard_index.read(simulation_n)
+
+        all_weighted_spikes_for_window = np.vstack((sim['exc'][:,st_pos:en_pos], sim['inh'][:,st_pos:en_pos]))
+
+        somatic_voltage_for_window = sim['somatic_voltage'][st_pos:en_pos]
+        somatic_voltage_for_window[somatic_voltage_for_window>self.v_clip] = self.v_clip
+        somatic_voltage_for_window = somatic_voltage_for_window - self.v_offset
+
+        output_spikes_for_window = np.zeros(self.window_size)
+        output_spike_times = sim['output_spike_times']
+        spike_times = output_spike_times[(output_spike_times>=st_pos) & (output_spike_times<en_pos)]
+        output_spikes_for_window[spike_times.astype(int)-st_pos] = 1
+
+        return {'sps_in':all_weighted_spikes_for_window,
+                'somatic_voltage_out':somatic_voltage_for_window,
+                'sps_out':output_spikes_for_window}
 
 class CausalConv1d(torch.nn.Conv1d):
     def __init__(self,

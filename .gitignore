@@ -4,6 +4,9 @@
 # output of quick_test.py
 quick_test_output/
 
+# downloads of data_release/download.py
+paper_data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

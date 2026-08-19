@@ -118,6 +118,46 @@ NMDA is `0.00131/0.00088 × 0.00088 µS` = 1.31 nS.
 
 ---
 
+## Data from the paper
+
+The simulations the paper trained on and the networks it reports are on Hugging Face:
+
+| | | |
+| --- | --- | --- |
+| [`i-do-ai/fci-neuron-simulations`](https://huggingface.co/datasets/i-do-ai/fci-neuron-simulations) | dataset | 10000 train + 2500 test simulations of each of the 24 models, ~200 GB (1-23 GB per model) |
+| [`i-do-ai/fci-neuron-tcns`](https://huggingface.co/i-do-ai/fci-neuron-tcns) | model | the three seeds of the depth-3 TCN of each model - the checkpoints, every evaluation along training, and the final AUCs of all 12 networks per model |
+
+```bash
+pip install huggingface_hub
+
+# the test simulations and the trained networks of one model (a few GB)
+python data_release/download.py --model Rat_L5b_PC_2_Hay_passive_dends_simple_soma --splits test
+
+# its training simulations too, or everything
+python data_release/download.py --model Rat_L5b_PC_2_Hay_passive_dends_simple_soma --splits train test
+python data_release/download.py --all --splits train test
+```
+
+The download lands in `paper_data/`, and plugs into steps 2 and 3 directly:
+
+```bash
+# the paper's FCI of that model, seed 0
+python calculate_fci.py --neuron_tcn_folder paper_data/tcns/models/Rat_L5b_PC_2_Hay_passive_dends_simple_soma/d3_w128_t0 --use_normalized
+
+# retrain on the paper's simulations
+python training_nets/train_neuron_tcn.py \
+    --simulation_dataset_folder paper_data/simulations/models/Rat_L5b_PC_2_Hay_passive_dends_simple_soma \
+    --neuron_tcn_folder /path/to/output/tcn ...
+```
+
+The simulations are stored as HDF5 shards of 500 simulations rather than as one folder per
+simulation ([`utils/simulation_shards.py`](utils/simulation_shards.py) documents the format;
+`SimulationData` in the trainer reads both layouts). A dataset you generate yourself with step 1
+can be packed the same way with `data_release/pack_dataset.py`, which makes it 2-3x smaller and
+1500x fewer files. The scripts that built the release are in [`data_release/`](data_release/).
+
+---
+
 ## Usage
 
 The FCI pipeline consists of three main steps:
